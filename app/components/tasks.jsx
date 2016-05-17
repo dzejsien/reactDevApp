@@ -1,31 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import TaskStore from '../stores/taskStore.js'
+import TaskActions from '../actions/taskActions.js'
+import Reflux from 'reflux'
+import TaskNode from './taskNode.jsx'
+import TaskList from './taskList.jsx'
+import ListHeader from './ListHeader.jsx'
+import TaskForm from './taskForm.jsx'
 
-export default class Tasks extends React.Component {
+var Test = module.exports = React.createClass({
+  mixins: [Reflux.connect(TaskStore, 'tasks')],
+  handleTaskSubmit(task) {
+      TaskActions.add(task);
+  },
+
+  getInitialState() {
+    return {tasks: []};
+  },
+
+  componentWillMount() {
+    TaskActions.fetchList();
+  },
+
   render() {
-    return (<div className="container">
-    <div className="page-header">
-      <div className="row">
-        <div className="col-lg-8 col-md-7 col-sm-6">
-          <h1>Tasks</h1>
-          <p className="lead">Define new or edit existing tasks</p>
+    console.log('render');
+    console.log(this.state.tasks);
+    return (
+      <div className="container">
+        <div className="page-header">
+          <ListHeader title="Tasks" desc="Define new or edit existing tasks"/>
+          <TaskForm onTaskSubmit={this.handleTaskSubmit}/>
+          <hr/>
+          <TaskList tasks={this.state.tasks} showCloseButton={false}/>
         </div>
       </div>
-      <div className="row">
-        <button id="createTask" className="btn btn-primary" type="button">Create new task</button>
-
-      </div>
-      <hr />
-      <div className="row">
-        <div className="col-md-offset-1 col-md-8">
-          <div className="bs-component">
-          tasks...
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>)
+    )
   }
-}
-
-//ReactDOM.render(<World/>, document.getElementById('world'));
+});

@@ -4,13 +4,25 @@ import TaskActions from '../actions/taskActions.js';
 var TaskStore = module.exports = Reflux.createStore({
   tasks: [],
   listenables: [TaskActions],
-  init: function() {
-    //this.fetchList();
+
+  fetchListCompleted: function(data) {
+    this.tasks = data;
+    this.trigger(this.tasks);
   },
 
-  fetchList: function() {
-    this.tasks = [1,2,3,4];
-    console.log('tasks in store');
+  close: function(task) {
+    console.log('start closing');
+  },
+
+  closeCompleted: function(data) {
+    console.log(data);
+    console.log('close completed');
+    this.trigger(this.tasks);
+  },
+
+  addCompleted: function(data) {
+    console.log(data);
+    console.log('add completed');
     this.trigger(this.tasks);
   }
 });

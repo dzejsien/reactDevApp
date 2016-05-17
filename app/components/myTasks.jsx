@@ -1,27 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import TaskStore from '../stores/taskStore.js'
+import TaskActions from '../actions/taskActions.js'
+import Reflux from 'reflux'
+import TaskNode from './taskNode.jsx'
+import TaskList from './taskList.jsx'
+import ListHeader from './ListHeader.jsx'
 
-export default class Tasks extends React.Component {
+var Test = module.exports = React.createClass({
+  mixins: [Reflux.connect(TaskStore, 'tasks')],
+
+  handleTaskClosing(task) {
+    console.log('closeTask in myTasks');
+    task.Status = "Closed";
+    TaskActions.close(task);
+  },
+
+  getInitialState() {
+    return {tasks: []};
+  },
+
+  componentWillMount() {
+    TaskActions.fetchList();
+  },
+
   render() {
-    return (<div className="container">
-    <div className="page-header" id="banner">
-      <div className="row">
-        <div className="col-lg-8 col-md-7 col-sm-6">
-          <h1>My Tasks</h1>
-          <p className="lead">This is my list of tasks</p>
-        </div>
-      </div>
-      <hr />
-      <div className="row">
-        <div className="col-md-offset-1 col-md-8">
-          <div className="bs-component">
-            my tasks ...
-          </div>
-        </div>
+    console.log('render');
+    console.log(this.state.tasks);
+    return (
+      <div className="container">
+        <div className="page-header">
+          <ListHeader title="My Tasks" desc="This is my list of tasks" />
+          <hr/>
+          <TaskList tasks={this.state.tasks} onClosing={this.handleTaskClosing} showCloseButton={true}/>
       </div>
     </div>
-  </div>)
+    )
   }
-}
-
-//ReactDOM.render(<World/>, document.getElementById('world'));
+});
