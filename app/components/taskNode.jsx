@@ -17,7 +17,10 @@ export default class TaskNode extends React.Component {
     var task = this.props.task;
 
     return (
-      <Panel header={task.Subject} bsStyle="primary">{task.Description}
+      <Panel header={task.Subject + (task.Status == "Closed" ? ' (Closed)' : "")} bsStyle="primary">
+        <p>Project: {task.ProjectId}</p>
+        <p>Assigned to: {task.UserId}</p>
+        <p>Description: {task.Description}</p>
         <ButtonToolbar>
           {task.Status == "Open" && this.props.showCloseButton == true
             ? <Button bsStyle="success" onClick={this.closeTask}>Close</Button>

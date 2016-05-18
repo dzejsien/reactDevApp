@@ -8,10 +8,10 @@ namespace Api.Controllers
     [RoutePrefix("api/tasks")]
     public class TasksController : ApiController
     {
-        static IList<TaskModel> tasks = new List<TaskModel>()
+        public static IList<TaskModel> tasks = new List<TaskModel>()
         {
-            new TaskModel() { Id = 1, Subject = "Clear room", Description = "Clear room in 5 minutes", Status = TaskStatus.Closed },
-            new TaskModel() { Id = 2, Subject = "Go for a walk", Description = "Visit your friend", Status = TaskStatus.Open }
+            new TaskModel() { Id = 1, ProjectId = 1, UserId = 1, Subject = "Clear room", Description = "Clear room in 5 minutes", Status = TaskStatus.Closed },
+            new TaskModel() { Id = 2, ProjectId = 2 , UserId = 2, Subject = "Go for a walk", Description = "Visit your friend", Status = TaskStatus.Open }
         };
 
         public IHttpActionResult Get()

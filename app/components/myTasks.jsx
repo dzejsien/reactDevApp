@@ -29,7 +29,7 @@ var Test = module.exports = React.createClass({
     return (
       <div className="container">
         <div className="page-header">
-          <ListHeader title="My Tasks" desc="This is my list of tasks" />
+          <ListHeader title="my tasks" desc="This is my list of tasks" />
           <hr/>
           <TaskList tasks={this.state.tasks} onClosing={this.handleTaskClosing} showCloseButton={true}/>
       </div>

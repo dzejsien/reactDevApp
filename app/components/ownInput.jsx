@@ -1,6 +1,7 @@
 import React from 'react'
 import Formsy from 'formsy-react';
 
+
 var OwnInput = module.exports = React.createClass({
 
   // Add the Formsy Mixin
@@ -13,21 +14,17 @@ var OwnInput = module.exports = React.createClass({
   },
 
   render() {
-    const className = (this.showRequired() ? 'required' : this.showError() ? 'error' : '') + ' form-control';
+    const className = this.showRequired() || this.showError() ? 'has-error' : null;
     const errorMessage = this.getErrorMessage();
 
     return (
-      <div className="form-group">
+      <div className={className}>
         <label className="control-label" for={this.props.inputId}>{this.props.labelName} {this.isRequired() ? '*' : null}</label>
         <div>
-          <input id={this.props.inputId} type="text" className={className} placeholder={this.props.placeholder} onChange={this.changeValue} value={this.getValue()}/>
+          <input id={this.props.inputId} type="text" className='form-control' placeholder={this.props.placeholder} onChange={this.changeValue} value={this.getValue()}/>
           <span>{errorMessage}</span>
         </div>
       </div>
     );
   }
 });
-// <div className={className}>
-//   <input type="text" onChange={this.changeValue} value={this.getValue()}/>
-//   <span>{errorMessage}</span>
-// </div>

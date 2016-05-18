@@ -3,15 +3,14 @@ import {ajax, BaseUrl} from '../common.js'
 import $ from 'jquery'
 
 
-var TaskActions = module.exports = Reflux.createActions({
+var ProjectActions = module.exports = Reflux.createActions({
   "fetchList" : { asyncResult: true },
-  "close" : { asyncResult: true },
   "add": { asyncResult: true }
 });
 
-const Url = BaseUrl + '/api/tasks';
+const Url = BaseUrl + '/api/projects';
 
-TaskActions.fetchList.listen( function() {
+ProjectActions.fetchList.listen( function() {
     $.ajax({
       url: Url,
       cache: false,
@@ -23,24 +22,12 @@ TaskActions.fetchList.listen( function() {
     });
 });
 
-TaskActions.close.listen(function(task) {
-  console.log(task);
+ProjectActions.add.listen(function(project) {
+  console.log(project);
   $.ajax({
     url: Url,
     method: 'POST',
-    data: task,
-    context: this,
-    success: this.completed.bind(this, task),
-    error: this.failed
-  });
-});
-
-TaskActions.add.listen(function(task) {
-  console.log(task);
-  $.ajax({
-    url: Url,
-    method: 'POST',
-    data: task,
+    data: project,
     context: this,
     success: function(data) {
       this.completed(data);

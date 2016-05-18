@@ -12,7 +12,7 @@ export default class App extends Component {
                     <NavItem href="#/mytasks">My tasks</NavItem>
                     <NavItem href="#/projects">Projects</NavItem>
                     <NavItem href="#/tasks">Tasks</NavItem>
-                    <NavItem href="#/test">Test</NavItem>
+                    <NavItem href="#/users">Users</NavItem>
                 </Nav>
             </Navbar>
 
@@ -21,5 +21,3 @@ export default class App extends Component {
     );
   }
 }
-
-//ReactDOM.render(<App />, document.getElementById('app'))

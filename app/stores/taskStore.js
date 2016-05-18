@@ -10,10 +10,6 @@ var TaskStore = module.exports = Reflux.createStore({
     this.trigger(this.tasks);
   },
 
-  close: function(task) {
-    console.log('start closing');
-  },
-
   closeCompleted: function(data) {
     console.log(data);
     console.log('close completed');
@@ -23,6 +19,7 @@ var TaskStore = module.exports = Reflux.createStore({
   addCompleted: function(data) {
     console.log(data);
     console.log('add completed');
+    this.tasks = this.tasks.concat(data);
     this.trigger(this.tasks);
   }
 });

@@ -1,30 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import Reflux from 'reflux'
+import ProjectStore from '../stores/projectStore.js'
+import ProjectActions from '../actions/projectActions.js'
+import ProjectNode from './projectNode.jsx'
+import ProjectList from './projectList.jsx'
+import ListHeader from './ListHeader.jsx'
+import ProjectForm from './projectForm.jsx'
 
-export default class Projects extends React.Component {
+var Projects = module.exports = React.createClass({
+  mixins: [Reflux.connect(ProjectStore, 'projects')],
+  handleProjectSubmit(project) {
+      ProjectActions.add(project);
+  },
+
+  getInitialState() {
+    return {projects: []};
+  },
+
+  componentWillMount() {
+    ProjectActions.fetchList();
+  },
+
   render() {
-    return (<div className="container">
-    <div className="page-header" id="banner">
-      <div className="row">
-        <div className="col-lg-8 col-md-7 col-sm-6">
-          <h1>Projects</h1>
-          <p className="lead">Define new or edit existing projects</p>
+    return (
+      <div className="container">
+        <div className="page-header">
+          <ListHeader title="projects" desc="Define new or edit existing projects"/>
+          <ProjectForm onSubmit={this.handleProjectSubmit}/>
+          <hr/>
+          <ProjectList projects={this.state.projects} />
         </div>
       </div>
-      <div className="row">
-        <button id="createProject" className="btn btn-primary" type="button">Create new project</button>
-      </div>
-      <hr />
-      <div className="row">
-        <div className="col-md-offset-1 col-md-8">
-          <div className="bs-component">
-            projects
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>);
+    )
   }
-}
-
-//ReactDOM.render(<Hello/>, document.getElementById('hello'));
+});

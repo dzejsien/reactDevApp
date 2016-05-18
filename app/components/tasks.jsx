@@ -7,7 +7,7 @@ import TaskList from './taskList.jsx'
 import ListHeader from './ListHeader.jsx'
 import TaskForm from './taskForm.jsx'
 
-var Test = module.exports = React.createClass({
+var Tasks = module.exports = React.createClass({
   mixins: [Reflux.connect(TaskStore, 'tasks')],
   handleTaskSubmit(task) {
       TaskActions.add(task);
@@ -27,8 +27,8 @@ var Test = module.exports = React.createClass({
     return (
       <div className="container">
         <div className="page-header">
-          <ListHeader title="Tasks" desc="Define new or edit existing tasks"/>
-          <TaskForm onTaskSubmit={this.handleTaskSubmit}/>
+          <ListHeader title="tasks" desc="Define new or edit existing tasks"/>
+          <TaskForm onSubmit={this.handleTaskSubmit}/>
           <hr/>
           <TaskList tasks={this.state.tasks} showCloseButton={false}/>
         </div>
