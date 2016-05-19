@@ -4,7 +4,8 @@ import UserStore from '../stores/userStore.js'
 import UserActions from '../actions/userActions.js'
 import UserNode from './userNode.jsx'
 import UserList from './userList.jsx'
-import ListHeader from './ListHeader.jsx'
+import ListHeader from './listHeader.jsx'
+
 
 var Users = module.exports = React.createClass({
   mixins: [Reflux.connect(UserStore, 'users')],

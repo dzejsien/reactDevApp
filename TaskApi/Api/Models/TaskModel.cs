@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Api.Models
@@ -19,6 +20,36 @@ namespace Api.Models
             get
             {
                 return Status.ToString();
+            }
+        }
+
+        private ProjectModel _project;
+
+        public ProjectModel Project
+        {
+            get
+            {
+                if (_project == null)
+                {
+                    _project = Controllers.ProjectsController.projects.FirstOrDefault(x => x.Id == this.ProjectId);
+                }
+
+                return _project;
+            }
+        }
+
+        private UserModel _user;
+
+        public UserModel User
+        {
+            get
+            {
+                if (_user == null)
+                {
+                    _user = Controllers.UsersController.users.FirstOrDefault(x => x.Id == this.UserId);
+                }
+
+                return _user;
             }
         }
     }

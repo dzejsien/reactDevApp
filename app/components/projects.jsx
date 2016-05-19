@@ -4,7 +4,7 @@ import ProjectStore from '../stores/projectStore.js'
 import ProjectActions from '../actions/projectActions.js'
 import ProjectNode from './projectNode.jsx'
 import ProjectList from './projectList.jsx'
-import ListHeader from './ListHeader.jsx'
+import ListHeader from './listHeader.jsx'
 import ProjectForm from './projectForm.jsx'
 
 var Projects = module.exports = React.createClass({
