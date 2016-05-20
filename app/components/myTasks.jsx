@@ -6,7 +6,7 @@ import UserActions from '../actions/userActions.js'
 import Reflux from 'reflux'
 import TaskNode from './taskNode.jsx'
 import TaskList from './taskList.jsx'
-import ListHeader from './ListHeader.jsx'
+import ListHeader from './listHeader.jsx'
 import {preaperSelectOptions} from '../common.js'
 
 var Test = module.exports = React.createClass({
