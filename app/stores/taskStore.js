@@ -10,16 +10,23 @@ var TaskStore = module.exports = Reflux.createStore({
     this.trigger(this.tasks);
   },
 
+  fetchUsersListCompleted: function(data) {
+    this.tasks = data;
+    this.trigger(this.tasks);
+  },
+
   closeCompleted: function(data) {
-    console.log(data);
-    console.log('close completed');
     this.trigger(this.tasks);
   },
 
   addCompleted: function(data) {
-    console.log(data);
-    console.log('add completed');
-    this.tasks = this.tasks.concat(data);
+    if (data.isEdition == true) {
+      TaskActions.fetchList();
+    }
+    else {
+        this.tasks = this.tasks.concat(data.model);
+    }
+
     this.trigger(this.tasks);
   }
 });

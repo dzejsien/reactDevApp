@@ -23,7 +23,6 @@ ProjectActions.fetchList.listen( function() {
 });
 
 ProjectActions.add.listen(function(project) {
-  console.log(project);
   $.ajax({
     url: Url,
     method: 'POST',

@@ -8,5 +8,10 @@ var UserStore = module.exports = Reflux.createStore({
   fetchListCompleted: function(data) {
     this.users = data;
     this.trigger(this.users);
+  },
+
+  fetchUsersListCompleted: function(data) {
+    this.users = data;
+    this.trigger(this.users);
   }
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Panel, ButtonToolbar, Button} from 'react-bootstrap'
+import TaskToEditActions from '../actions/taskToEditActions.js'
 
 export default class TaskNode extends React.Component {
   constructor() {
@@ -10,12 +11,12 @@ export default class TaskNode extends React.Component {
 
   closeTask() {
     var task = this.props.task;
-    console.log('closeTask');
     this.props.onClosing(task);
   }
 
   beginEdition() {
-      this.props.beginEdition(this.props.task);
+      this.props.beginEdition();
+      TaskToEditActions.startEdition(this.props.task);
   }
 
   render() {

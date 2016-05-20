@@ -11,21 +11,12 @@ import TaskList from './taskList.jsx'
 import ListHeader from './listHeader.jsx'
 import TaskForm from './taskForm.jsx'
 
-const emptyTask = {
-  id: null,
-  subject: null,
-  description: null,
-  userId: null,
-  projectId: null
-};
+
 
 var Tasks = module.exports = React.createClass({
   mixins: [Reflux.connect(TaskStore, 'tasks'), Reflux.connect(UserStore, 'users'), Reflux.connect(ProjectStore, 'projects')],
   handleTaskSubmit(task) {
     TaskActions.add(task);
-    this.setState({
-      taskToEdit: emptyTask
-    });
   },
 
   getInitialState() {
@@ -34,7 +25,6 @@ var Tasks = module.exports = React.createClass({
       users: [],
       projects: [],
       openTaskForm: false,
-      taskToEdit: emptyTask
     };
   },
 
@@ -50,8 +40,8 @@ var Tasks = module.exports = React.createClass({
     });
   },
 
-  beginEdition(task) {
-      this.setState({openTaskForm: true, taskToEdit: task});
+  beginEdition() {
+      this.setState({openTaskForm: true});
   },
 
   render() {
@@ -59,7 +49,7 @@ var Tasks = module.exports = React.createClass({
       <div className="container">
         <div className="page-header">
           <ListHeader title="tasks" desc="Define new or edit existing tasks"/>
-          <TaskForm onSubmit={this.handleTaskSubmit} handleOpen={this.handleOpen} users={this.state.users} projects={this.state.projects} open={this.state.openTaskForm} taskToEdit={this.state.taskToEdit}/>
+          <TaskForm onSubmit={this.handleTaskSubmit} handleOpen={this.handleOpen} users={this.state.users} projects={this.state.projects} open={this.state.openTaskForm} />
           <hr/>
           <TaskList tasks={this.state.tasks} beginEdition={this.beginEdition} showCloseButton={false} showEditButton={true} />
         </div>

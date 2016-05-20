@@ -11,8 +11,6 @@ var ProjectStore = module.exports = Reflux.createStore({
   },
 
   addCompleted: function(data) {
-    console.log(data);
-    console.log('add project completed');
     this.projects = this.projects.concat(data);
     this.trigger(this.projects);
   }

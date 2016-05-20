@@ -1,49 +1,41 @@
 import React from 'react'
+import Reflux from 'reflux'
 import {FormGroup, ControlLabel, FormControl, Button, Panel} from 'react-bootstrap'
 import Formsy from 'formsy-react'
 import OwnInput from './ownInput.jsx'
 import MyForm from './myForm.jsx'
 import FRC from 'formsy-react-components';
+import TaskToEditStore from '../stores/taskToEditStore.js'
+import TaskToEditActions from '../actions/taskToEditActions.js'
+import Task, {preaperSelectOptions} from '../common.js'
 
 const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } = FRC;
 
-export default class TaskForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      layout: 'vertical',
-      validatePristine: true
-    };
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-  }
+var TaskForm = module.exports = React.createClass({
+  mixins: [Reflux.connect(TaskToEditStore, 'taskToEdit')],
+
+  getInitialState() {
+    return ({
+        layout: 'vertical',
+        validatePristine: true,
+        taskToEdit: new Task(),
+      })
+  },
 
   handleOpen() {
+    this.setState({taskToEdit: new Task()});
     this.props.handleOpen();
-  }
+  },
 
   handleSubmit(model, resetForm) {
     this.props.onSubmit(model);
     resetForm();
     this.handleOpen();
-  }
-
-  preaperSelectOptions(array, valueProp, labelProp) {
-    var options = array.map(elem => {
-        return {
-          'value': elem[valueProp],
-          'label': elem[labelProp]
-        };
-    });
-    var singleOptions = options.slice(0);
-    singleOptions.unshift({value: '', label: 'Please select…'});
-    return singleOptions;
-  }
+  },
 
   render() {
-    var selectOptionsProject = this.preaperSelectOptions(this.props.projects, 'Id', 'Name');
-    var selectOptionsUser = this.preaperSelectOptions(this.props.users, 'Id', 'FullName');
+    var selectOptionsProject = preaperSelectOptions(this.props.projects, 'Id', 'Name');
+    var selectOptionsUser = preaperSelectOptions(this.props.users, 'Id', 'FullName');
 
     return (
       <div>
@@ -53,17 +45,16 @@ export default class TaskForm extends React.Component {
         <Panel collapsible expanded={this.props.open}>
           <MyForm onSubmit={this.handleSubmit}
                 layout={this.state.layout}
-                validatePristine={this.state.validatePristine}
-                ref="taskForm">
-                <Input name="id" type="hidden" />
-                <Input placeholder="Enter subject" label="Subject" name="subject" validations="maxLength:250" validationError="Max chars is 250" required />
-                <Input placeholder="Enter description" label="Description" name="description" validations="maxLength:1250" validationError="Max chars is 1250" required />
-                <Select name="projectId" label="Project" options={selectOptionsProject} required />
-                <Select name="userId" label="User" options={selectOptionsUser} required />
+                validatePristine={this.state.validatePristine}>
+                <Input value={this.state.taskToEdit.Id} name="id" type="hidden" />
+                <Input value={this.state.taskToEdit.Subject} placeholder="Enter subject" label="Subject" name="subject" validations="maxLength:250" validationError="Max chars is 250" required />
+                <Input value={this.state.taskToEdit.Description} placeholder="Enter description" label="Description" name="description" validations="maxLength:1250" validationError="Max chars is 1250" required />
+                <Select value={this.state.taskToEdit.ProjectId} name="projectId" label="Project" options={selectOptionsProject} required />
+                <Select value={this.state.taskToEdit.UserId} name="userId" label="User" options={selectOptionsUser} required />
                 <Button type="submit">Submit</Button>
           </MyForm>
         </Panel>
       </div>
     );
   }
-}
+});

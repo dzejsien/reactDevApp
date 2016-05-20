@@ -14,21 +14,16 @@ namespace Api.Controllers
             new TaskModel() { Id = 2, ProjectId = 2 , UserId = 2, Subject = "Go for a walk", Description = "Visit your friend", Status = TaskStatus.Open }
         };
 
+        
         public IHttpActionResult Get()
         {
             return Json(tasks);
         }
 
+       
         public IHttpActionResult Get(int id)
         {
-            var task = tasks.FirstOrDefault(x => x.Id == id);
-
-            if (task == null)
-            {
-                return NotFound();
-            }
-
-            return Json(task);
+            return Json(tasks.Where(x => x.UserId == id));
         }
 
         public IHttpActionResult Post(TaskModel model)
@@ -48,7 +43,7 @@ namespace Api.Controllers
             }
 
             tasks.Add(model);
-            return Json(model);
+            return Json(new { model, isEdition = false });
         }
 
         public IHttpActionResult Put(int id, TaskModel model)
@@ -63,8 +58,12 @@ namespace Api.Controllers
             taskToUpdate.Subject = model.Subject;
             taskToUpdate.Description = model.Description;
             taskToUpdate.Status = model.Status;
+            taskToUpdate.UserId = model.UserId;
+            taskToUpdate.BindUser();
+            taskToUpdate.ProjectId = model.ProjectId;
+            taskToUpdate.BindProject();
 
-            return Ok();
+            return Json(new { model = taskToUpdate, isEdition = true });
         }
 
         public IHttpActionResult Delete(int id)

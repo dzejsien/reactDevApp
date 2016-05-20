@@ -52,6 +52,16 @@ namespace Api.Models
                 return _user;
             }
         }
+
+        public void BindProject()
+        {
+            this._project = null;
+        }
+
+        public void BindUser()
+        {
+            this._user = null;
+        }
     }
 
     public enum TaskStatus
